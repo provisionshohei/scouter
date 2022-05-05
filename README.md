@@ -24,4 +24,4 @@ Things you may want to cover:
 * ...
 # scouter
 
-Scouter enables you to know your first impression from others.
+Scouter enables you to know your first impression by the evaluations from others.
