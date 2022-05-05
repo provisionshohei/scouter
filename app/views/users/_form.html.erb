@@ -1,0 +1,59 @@
+<% if user.errors %>
+  <ul id="error_explanation">
+    <% user.errors.full_messages.each do |message| %>
+      <li class="text-danger"><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @user, class: "mx-3", local: true do |f| %>
+  <table class="table table-striped table-hover table-bordered shadow-sm">
+    <tbody>
+      <tr>
+        <th class="table-success"><%= f.label :name, '名前' %></th>
+        <td><%= f.text_field :name, autofocus: true, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :email, 'メールアドレス' %></th>
+        <td><%= f.text_field :email, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :password, 'パスワード' %></th>
+        <td><%= f.text_field :password, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :password_confirmation, 'パスワード（確認）' %></th>
+        <td><%= f.text_field :password_confirmation, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :sex, '性別' %></th>
+        <td><%= f.text_field :sex, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :hobby, '趣味' %></th>
+        <td><%= f.text_field :hobby, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :character, '性格' %></th>
+        <td><%= f.text_field :character, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :generation, '世代' %></th>
+        <td><%= f.text_field :generation, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :admin, '管理者権限', class: "form-check-label" %></th>
+        <td>
+            <%= f.check_box :admin, class: "form-check-input ml-2" %>
+
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+
+  <div class="text-center print">
+    <%= f.submit '戻る', name: 'back', class: "btn btn-secondary mr-3" %>
+    <%= f.submit '登録する', class: "btn btn-primary" %>
+    <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
+  </div>
+<% end %>
