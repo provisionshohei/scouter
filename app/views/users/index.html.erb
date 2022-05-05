@@ -1,0 +1,18 @@
+<h1>ユーザー一覧</h1>
+
+<div class="row">
+  <% @users.each do |user| %>
+  <div class="col-sm-2">
+    <div class="card mb-3">
+      <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= user.name %></h5>
+        <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= user.character %></p>
+        <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= user.hobby %></p>
+        <%= link_to "プロフィール", user_path(user), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>  
+  <% end %>
+</div>
+ 
