@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.order("RAND()").all
+    @users = User.order("RAND()").paginate(page: params[:page], per_page: 12)
   end
 
   def show
