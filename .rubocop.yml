@@ -1,14 +1,1 @@
-inherit_from:
-  - .rubocop_airbnb.yml
-AllCops:
-  TargetRubyVersion: 2.7
-  TargetRailsVersion: 6.1
-
-  # ここで解析しないディレクトリやファイルを設定可能
-  Exclude:
-    - 'bin/**/*'
-    - 'config/**/*'
-    - 'db/**/*'
-    - 'lib/**/*'
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
+inherit_from: .rubocop_todo.yml
