@@ -1,8 +1,13 @@
 <h1>ユーザー一覧</h1>
 
+<div class="mx-auto" style="width: 210px;">
+  <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
+</div>
+
 <div class="row">
+
   <% @users.each do |user| %>
-  <div class="col-sm-2">
+  <div class="col-sm-3">
     <div class="card mb-3">
       <img class="card-img-top" src=".../100px180/" alt="Card image cap">
       <div class="card-body">
@@ -15,4 +20,9 @@
   </div>  
   <% end %>
 </div>
+
+<div class="mx-auto" style="width: 210px;">
+  <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
+</div>
+
  
