@@ -9,7 +9,15 @@
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent15">
       <ul class="navbar-nav ml-auto">
-        <li class="nav_item"><%= link_to 'ユーザー一覧', users_path, class: 'nav-link text-white' %></li>
+        <% if current_user %>
+          <li class="nav_item"><%= link_to 'ユーザー一覧', users_path, class: 'nav-link text-white' %></li>
+          <% if current_user.admin %>
+            <li class="nav_item"><%= link_to 'ユーザー管理', admin_users_index_path, class: 'nav-link text-white' %></li>
+          <% end %>
+          <li class="nav_item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
+        <% else %>
+          <li class="nav_item"><%= link_to 'ログイン', login_path, class: 'nav-link' %></li>
+        <% end %>
       </ul>
     </div>
   </nav>

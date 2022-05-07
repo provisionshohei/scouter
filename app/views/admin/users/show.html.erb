@@ -1,0 +1,19 @@
+<h1>ユーザープロフィール</h1>
+
+<div class="card mb-3">
+  <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= @user.name %></h5>
+    <p class="card-text"><%= User.human_attribute_name(:email) %>：<%= @user.email %></p>
+    <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex %></p>
+    <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
+    <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
+    <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation %></p>
+    <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
+  </div>
+</div>
+
+<div class="text-center print">
+  <%= link_to '編集する', edit_user_path, class: "btn btn-primary" %>
+  <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
+</div>

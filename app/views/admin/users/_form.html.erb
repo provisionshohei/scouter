@@ -1,0 +1,57 @@
+<% if user.errors %>
+  <ul id="error_explanation">
+    <% user.errors.full_messages.each do |message| %>
+      <li class="text-danger"><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @user, class: "mx-3", local: true do |f| %>
+  <table class="table table-striped table-hover table-bordered shadow-sm">
+    <tbody>
+      <tr>
+        <th class="table-success"><%= f.label :name, '名前' %></th>
+        <td><%= f.text_field :name, autofocus: true, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :email, 'メールアドレス' %></th>
+        <td><%= f.text_field :email, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :password, 'パスワード' %></th>
+        <td><%= f.text_field :password, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :password_confirmation, 'パスワード（確認）' %></th>
+        <td><%= f.text_field :password_confirmation, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :sex, '性別' %></th>
+        <td><%= f.select :sex, [['女性', 0], ['男性', 1]], {}, { id: "sex", class: "form-control" } %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :hobby, '趣味' %></th>
+        <td><%= f.text_field :hobby, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :character, '性格' %></th>
+        <td><%= f.text_field :character, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :generation, '世代' %></th>
+        <td><%= f.select :generation, [['10代', 0], ['20代', 1], ['30代', 2],['40代', 3],['50代', 4],['60代以上', 5]],{}, { id: "generation", class: "form-control" } %></td>
+      </tr>
+      <tr>
+        <th class="table-success"><%= f.label :admin, '管理者権限', class: "form-check-label" %></th>
+        <td>
+            <%= f.check_box :admin, class: "form-check-input ml-2" %>
+
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+
+  <div class="text-center print">
+    <%= f.submit '登録する', class: "btn btn-primary" %>
+  </div>
+<% end %>
