@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   helper_method :set_sex, :set_generation
+  skip_before_action :login_required, only: [:index, :new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -15,9 +16,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
+    @user = User.new(user_params)
     if @user.save
-      redirect_to users_url, notice: "ユーザー「#{@user.name}」を登録しました。"
+      redirect_to users_path, notice: "ユーザー「#{@user.name}」を登録しました。"
     else
       render :new
     end
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation, :image)
+      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation)
     end
 
     def set_user
