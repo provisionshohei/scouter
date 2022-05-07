@@ -27,7 +27,7 @@
       </tr>
       <tr>
         <th class="table-success"><%= f.label :sex, '性別' %></th>
-        <td><%= f.text_field :sex, class: "form-control" %></td>
+        <td><%= f.select :sex, [['女性', 0], ['男性', 1]], {}, { id: "sex", class: "form-control" } %></td>
       </tr>
       <tr>
         <th class="table-success"><%= f.label :hobby, '趣味' %></th>
@@ -39,20 +39,12 @@
       </tr>
       <tr>
         <th class="table-success"><%= f.label :generation, '世代' %></th>
-        <td><%= f.text_field :generation, class: "form-control" %></td>
-      </tr>
-      <tr>
-        <th class="table-success"><%= f.label :admin, '管理者権限', class: "form-check-label" %></th>
-        <td>
-            <%= f.check_box :admin, class: "form-check-input ml-2" %>
-
-        </td>
+        <td><%= f.select :generation, [['10代', 0], ['20代', 1], ['30代', 2],['40代', 3],['50代', 4],['60代以上', 5]],{}, { id: "generation", class: "form-control" } %></td>
       </tr>
     </tbody>
   </table> 
 
   <div class="text-center print">
-    <%= f.submit '戻る', name: 'back', class: "btn btn-secondary mr-3" %>
     <%= f.submit '登録する', class: "btn btn-primary" %>
     <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
   </div>

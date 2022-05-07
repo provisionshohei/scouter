@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  helper_method :set_sex, :set_generation
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -26,8 +27,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.update(user_params)
-    if @user.save
+    if @user.update(user_params)
       redirect_to users_url, notice: "ユーザー「#{@user.name}」を更新しました。"
     else
       render :edit
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation)
+      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation, :image)
     end
 
     def set_user
@@ -71,6 +71,4 @@ class UsersController < ApplicationController
         "60代以上"
       end
     end
-
-    helper_method :set_sex, :set_generation
 end

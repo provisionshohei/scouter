@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true
   validates :character, length: { maximum: 50 }
   validates :hobby, length: { maximum: 50 }
+
+  has_secure_password
 end
