@@ -1,12 +1,13 @@
 <% if !current_user %>
-  <h1>第一印象は異性への戦闘力だ！！！</h1>
+  <h1 class="display-1 my-5">第一印象は異性への<br />「戦闘力」だ！！！</h1>
+  <h2>キミの「戦闘力」は果たして！？</h2>
   <div>
     <%=image_tag "scouter_top.jpg", class: 'img-fluid rounded img-thumbnail' %>
   </div>
-  <h2>君の写真で戦闘力が評価される！</h2>
-  <h2>年代別のが評価もわかるぞ！</h2>
-  <h2>評価をすればポイントがたまる（一人評価→１ポイント）。<br />
-      5ポイントをためると気になる人の評価をチェックすることができる！</h2>
+  <h3 class="mt-4">君の写真で戦闘力が評価される！</h3>
+  <h3 class="mt-4">年代別のが評価もわかるぞ！</h3>
+  <h3 class="mt-4">評価をすればポイントがたまる（一人評価→１ポイント）。</h3>
+  <h4 class="my-4">5ポイントをためると気になる人の評価をチェックすることができる！</h4>
   <div>
     <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block' %>
     <%= link_to '新規登録', new_user_path, class: 'btn btn-info btn-lg btn-block' %>
@@ -15,9 +16,7 @@
 
   <h1>ユーザー一覧</h1>
 
-  <div class="mx-auto" style="width: 210px;">
-    <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
-  </div>
+  <%= render "shared/paginate" %>
 
   <div class="row">
 
@@ -36,7 +35,6 @@
     <% end %>
   </div>
 
-  <div class="mx-auto" style="width: 210px;">
-    <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
-  </div>
+  <%= render "shared/paginate" %>
+  
  <% end %>

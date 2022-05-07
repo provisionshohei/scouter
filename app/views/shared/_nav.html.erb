@@ -1,23 +1,20 @@
-<div class="navbar-expand-md p-3 mb-2 bg-success">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <a class="navbar-brand" href="#">Scouter</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <nav class="navbar navbar-expand-lg navbar-2">
-    <a class="navbar-brand text-white" href="/">SCOUTER</a>
-
-    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent15" aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent15">
-      <ul class="navbar-nav ml-auto">
-        <% if current_user %>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <% if current_user %>
           <li class="nav_item"><%= link_to 'ユーザー一覧', users_path, class: 'nav-link text-white' %></li>
           <% if current_user.admin %>
             <li class="nav_item"><%= link_to 'ユーザー管理', admin_users_index_path, class: 'nav-link text-white' %></li>
           <% end %>
           <li class="nav_item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
+        <% else %> 
+          <li class="nav_item"><%= link_to 'ログイン', login_path, class: 'nav-link text-white' %></li>
         <% end %>
-      </ul>
-    </div>
-  </nav>
-  
-</div>
+    </ul>
+  </div>
+</nav>
