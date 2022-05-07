@@ -1,6 +1,6 @@
-<% if user.errors %>
+<% if @user.errors %>
   <ul id="error_explanation">
-    <% user.errors.full_messages.each do |message| %>
+    <% @user.errors.full_messages.each do |message| %>
       <li class="text-danger"><%= message %></li>
     <% end %>
   </ul>
@@ -44,8 +44,7 @@
     </tbody>
   </table> 
 
-  <div class="text-center print">
+  <div class="text-center">
     <%= f.submit '登録する', class: "btn btn-primary" %>
-    <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
   </div>
 <% end %>

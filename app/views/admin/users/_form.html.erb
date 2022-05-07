@@ -1,6 +1,6 @@
-<% if user.errors %>
+<% if @user.errors %>
   <ul id="error_explanation">
-    <% user.errors.full_messages.each do |message| %>
+    <% @user.errors.full_messages.each do |message| %>
       <li class="text-danger"><%= message %></li>
     <% end %>
   </ul>

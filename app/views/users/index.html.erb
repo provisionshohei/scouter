@@ -1,28 +1,42 @@
-<h1>ユーザー一覧</h1>
+<% if !current_user %>
+  <h1>第一印象は異性への戦闘力だ！！！</h1>
+  <div>
+    <%=image_tag "scouter_top.jpg", class: 'img-fluid rounded img-thumbnail' %>
+  </div>
+  <h2>君の写真で戦闘力が評価される！</h2>
+  <h2>年代別のが評価もわかるぞ！</h2>
+  <h2>評価をすればポイントがたまる（一人評価→１ポイント）。<br />
+      5ポイントをためると気になる人の評価をチェックすることができる！</h2>
+  <div>
+    <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block' %>
+    <%= link_to '新規登録', new_user_path, class: 'btn btn-info btn-lg btn-block' %>
+  </div>
+<% else %>
 
-<div class="mx-auto" style="width: 210px;">
-  <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
-</div>
+  <h1>ユーザー一覧</h1>
 
-<div class="row">
+  <div class="mx-auto" style="width: 210px;">
+    <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
+  </div>
 
-  <% @users.each do |user| %>
-  <div class="col-sm-3">
-    <div class="card mb-3">
-      <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= user.name %></h5>
-        <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= user.character %></p>
-        <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= user.hobby %></p>
-        <%= link_to "プロフィール", user_path(user), class: "btn btn-primary" %>
+  <div class="row">
+
+    <% @users.each do |user| %>
+    <div class="col-sm-3">
+      <div class="card mb-3">
+        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= user.name %></h5>
+          <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= user.character %></p>
+          <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= user.hobby %></p>
+          <%= link_to "プロフィール", user_path(user), class: "btn btn-primary" %>
+        </div>
       </div>
-    </div>
-  </div>  
-  <% end %>
-</div>
+    </div>  
+    <% end %>
+  </div>
 
-<div class="mx-auto" style="width: 210px;">
-  <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
-</div>
-
- 
+  <div class="mx-auto" style="width: 210px;">
+    <%= will_paginate @users, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
+  </div>
+ <% end %>
