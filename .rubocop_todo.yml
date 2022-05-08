@@ -151,6 +151,7 @@ Style/ClassAndModuleChildren:
 
 # Offense count: 8
 Style/Documentation:
+  Enabled: false
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
