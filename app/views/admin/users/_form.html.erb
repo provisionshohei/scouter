@@ -15,15 +15,15 @@
       </tr>
       <tr>
         <th class="table-success"><%= f.label :email, 'メールアドレス' %></th>
-        <td><%= f.text_field :email, class: "form-control" %></td>
+        <td><%= f.email_field :email, class: "form-control" %></td>
       </tr>
       <tr>
         <th class="table-success"><%= f.label :password, 'パスワード' %></th>
-        <td><%= f.text_field :password, class: "form-control" %></td>
+        <td><%= f.password_field :password, class: "form-control" %></td>
       </tr>
       <tr>
         <th class="table-success"><%= f.label :password_confirmation, 'パスワード（確認）' %></th>
-        <td><%= f.text_field :password_confirmation, class: "form-control" %></td>
+        <td><%= f.password_field :password_confirmation, class: "form-control" %></td>
       </tr>
       <tr>
         <th class="table-success"><%= f.label :sex, '性別' %></th>

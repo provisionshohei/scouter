@@ -1,19 +1,88 @@
-<h1>ユーザープロフィール</h1>
+<h1><%= @user.name %>さんプロフィール</h1>
 
-<div class="card mb-3">
-  <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= @user.name %></h5>
-    <p class="card-text"><%= User.human_attribute_name(:email) %>：<%= @user.email %></p>
-    <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex %></p>
-    <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
-    <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
-    <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation %></p>
-    <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
+<div class="d-flex justify-content-center">
+  <div class="col-sm-5">
+    <div class="card mb-3">
+      <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= @user.name %></h5>
+        <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
+        <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
+        <% if current_user.id == @user.id %>
+          <p class="card-text"><%= User.human_attribute_name(:email) %>：<%= @user.email %></p>
+          <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex %></p>
+          <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation %></p>
+          <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
+<% if current_user.id == @user.id || current_user.admin? %>
+  <div class="text-center">
+    <%= link_to '編集する', edit_user_path, class: "btn btn-primary" %>
+    <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
+  </div>
+<% end %>
 
-<div class="text-center print">
-  <%= link_to '編集する', edit_user_path, class: "btn btn-primary" %>
-  <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
-</div>
+<% if current_user.id != @user.id %>
+  <div class="continput">
+    <%= form_with model: @user, class: "mx-3", local: true do |f| %>
+      <ul>
+        <li>
+          <%= f.radio_button :evaluation, '1' %>
+          <%= f.label :evaluation, 'L1：修行編エピソード１から出直せ', value: 1 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '2' %>
+          <%= f.label :evaluation, 'L2：まずは毎日修行。話はそれから', value: 2 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '3' %>
+          <%= f.label :evaluation, 'L3：まだまだ修行が足りん', value: 3 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '4' %>
+          <%= f.label :evaluation, 'L4：オレのテキではない', value: 4 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '5' %>
+          <%= f.label :evaluation, 'L5：まぁまぁだな', value: 5 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '6' %>
+          <%= f.label :evaluation, 'L6：少しはやるな', value: 6 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '7' %>
+          <%= f.label :evaluation, 'L7：ほうまだこんなヤツがいたとは', value: 7 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '8' %>
+          <%= f.label :evaluation, 'L8：むむっ、強敵だな', value: 8 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '9' %>
+          <%= f.label :evaluation, 'L9：まさかこのオレ様が震えているだと。。。？！', value: 9 %>
+          <%= render "bullet" %>
+        </li>
+        <li>
+          <%= f.radio_button :evaluation, '10' %>
+          <%= f.label :evaluation, 'L10：バカな、スカウターで測定不能できん！', value: 10 %>
+          <%= render "bullet" %>
+        </li>
+      </ul>
+      <div class="text-center">
+        <%= f.submit '測定する！', class: "btn btn-success btn-lg btn-block" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

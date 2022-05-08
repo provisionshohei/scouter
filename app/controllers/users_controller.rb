@@ -1,10 +1,19 @@
 class UsersController < ApplicationController
   helper_method :set_sex, :set_generation
   skip_before_action :login_required, only: [:index, :new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :correct_user]
+  before_action :correct_user, only: [:create, :edit, :destroy]
 
   def index
-    @users = User.order("RAND()").paginate(page: params[:page], per_page: 12)
+    if current_user
+      @users = if current_user.sex == 0
+        User.where(sex: 1).order("RAND()").paginate(page: params[:page], per_page: 12)
+              else
+        User.where(sex: 0).order("RAND()").paginate(page: params[:page], per_page: 12)
+              end
+    else
+      redirect_to login_path
+    end
   end
 
   def show
@@ -29,6 +38,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
+      get_point
       redirect_to users_url, notice: "ユーザー「#{@user.name}」を更新しました。"
     else
       render :edit
@@ -42,11 +52,15 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation)
+      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation, :point)
     end
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def correct_user
+      redirect_to(root_url) unless @user == current_user || current_user.admin?
     end
 
     def set_sex
@@ -71,5 +85,25 @@ class UsersController < ApplicationController
       else
         "60代以上"
       end
+    end
+
+    def point_param
+      params.require(:user).permit(:point)
+    end
+
+    def gain_point
+      @user.point += 1
+      @user.update(point_param)
+      flash[:notice] = "1ポイント獲得。(所持ポイント#{@user.point})"
+    end
+  
+    def lose_point
+      if @user.point > 5
+        @user.point -= 5
+      else
+        @user.point = 0
+      end
+      @user.update(point_param)
+      flash[:alert] = "5ポイント消化。(所持ポイント#{@user.point})"
     end
 end
