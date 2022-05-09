@@ -106,4 +106,11 @@ class UsersController < ApplicationController
       @user.update(point_param)
       flash[:alert] = "5ポイント消化。(所持ポイント#{@user.point})"
     end
+
+    def user_demo_image
+      if current_user.sex == 0
+        @image = URI("assets/figure")
+      else
+      end
+    end
 end
