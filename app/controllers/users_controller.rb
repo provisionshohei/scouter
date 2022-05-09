@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  helper_method :set_sex, :set_generation
+  helper_method :set_sex, :set_generation, :user_demo_image, :mypage_demo_image
   skip_before_action :login_required, only: [:index, :new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :correct_user]
   before_action :correct_user, only: [:create, :edit, :destroy]
@@ -7,17 +7,14 @@ class UsersController < ApplicationController
   def index
     if current_user
       @users = if current_user.sex == 0
-        User.where(sex: 1).order("RAND()").paginate(page: params[:page], per_page: 12)
+        User.where(sex: 1).order("RAND()").paginate(page: params[:page], per_page: 8)
               else
-        User.where(sex: 0).order("RAND()").paginate(page: params[:page], per_page: 12)
+        User.where(sex: 0).order("RAND()").paginate(page: params[:page], per_page: 8)
               end
-    else
-      redirect_to login_path
     end
   end
 
   def show
-   
   end
 
   def new
@@ -27,7 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_path, notice: "ユーザー「#{@user.name}」を登録しました。"
+      redirect_to @user, notice: "ユーザー「#{@user.name}」を登録しました。"
     else
       render :new
     end
@@ -109,8 +106,17 @@ class UsersController < ApplicationController
 
     def user_demo_image
       if current_user.sex == 0
-        @image = URI("assets/figure")
+        "figure" + rand(1..3).to_s + ".jpg"
       else
+        "figure" + rand(4..6).to_s + ".jpg"
+      end
+    end
+
+    def mypage_demo_image
+      if current_user.sex == 0
+        "figure" + rand(4..6).to_s + ".jpg"
+      else
+        "figure" + rand(1..3).to_s + ".jpg"
       end
     end
 end
