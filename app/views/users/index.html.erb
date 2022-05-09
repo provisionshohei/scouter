@@ -1,5 +1,8 @@
 <% if !current_user %>
-  <p class="big">テスト</p>
+  <div>
+    <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block' %>
+    <%= link_to '新規登録', new_user_path, class: 'btn btn-info btn-lg btn-block' %>
+  </div>
   <h1 class="display-1 my-5">第一印象は異性への<br />「戦闘力」だ！！！</h1>
   <h2>キミの「戦闘力」は果たして！？</h2>
   <div>
@@ -24,9 +27,9 @@
     <% @users.each do |user| %>
     <div class="col-sm-3">
       <div class="card mb-3">
-        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <%=image_tag user_demo_image, class: 'card-img-top', alt: 'Card image cap' %>
         <div class="card-body">
-          <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= user.name %></h5>
+          <h5 class="card-title"><%= user.name %></h5>
           <%= link_to "プロフィール", user_path(user), class: "btn btn-primary" %>
         </div>
       </div>

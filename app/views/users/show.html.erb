@@ -1,11 +1,14 @@
-<h1><%= @user.name %>さんプロフィール</h1>
+<h1><%= @user.name %><small>さん<br />プロフィール</small></h1>
 
 <div class="d-flex justify-content-center">
   <div class="col-sm-5">
     <div class="card mb-3">
-      <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+    <%if @user.id == current_user.id %>
+      <%=image_tag mypage_demo_image, class: 'card-img-top', alt: 'Card image cap' %>
+    <% else %>
+      <%=image_tag user_demo_image, class: 'card-img-top', alt: 'Card image cap' %>
+    <% end %>
       <div class="card-body">
-        <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= @user.name %></h5>
         <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
         <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
         <% if current_user.id == @user.id %>
@@ -13,19 +16,19 @@
           <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex %></p>
           <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation %></p>
           <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
+      </tr>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
 <% if current_user.id == @user.id || current_user.admin? %>
   <div class="text-center">
     <%= link_to '編集する', edit_user_path, class: "btn btn-primary" %>
     <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
   </div>
-<% end %>
-
-<% if current_user.id != @user.id %>
+<% else %>
   <div class="continput">
     <%= form_with model: @user, class: "mx-3", local: true do |f| %>
       <ul>
@@ -50,8 +53,8 @@
           <%= render "bullet" %>
         </li>
         <li>
-          <%= f.radio_button :evaluation, '5' %>
-          <%= f.label :evaluation, 'L5：まぁまぁだな', value: 5 %>
+          <%= f.radio_button :evaluation, '5', checked: true %>
+          <%= f.label :evaluation, 'L5：まぁまぁだな', value: 5%>
           <%= render "bullet" %>
         </li>
         <li>
