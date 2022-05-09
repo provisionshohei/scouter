@@ -106,17 +106,17 @@ class UsersController < ApplicationController
 
     def user_demo_image
       if current_user.sex == 0
-        "figure" + rand(1..3).to_s + ".jpg"
+        "figure" + rand(1..6).to_s + ".jpg"
       else
-        "figure" + rand(4..6).to_s + ".jpg"
+        "figure" + rand(7..12).to_s + ".jpg"
       end
     end
 
     def mypage_demo_image
       if current_user.sex == 0
-        "figure" + rand(4..6).to_s + ".jpg"
+        "figure" + rand(7..12).to_s + ".jpg"
       else
-        "figure" + rand(1..3).to_s + ".jpg"
+        "figure" + rand(1..6).to_s + ".jpg"
       end
     end
 end
