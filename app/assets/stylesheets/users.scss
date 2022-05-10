@@ -351,6 +351,10 @@ input[type="radio"]:checked ~ .bullet .line.seven{
 }
 
 /*ページネーション自体のデザイン*/
+.pagination {
+  justify-content: center;
+}
+
 .pagination>li>a {          
   border: none;     /*枠線をなくす*/
   color: #696969;   /*文字の色を変える*/
@@ -359,12 +363,24 @@ input[type="radio"]:checked ~ .bullet .line.seven{
 /* 表示しているページ番号のデザイン */
 .pagination>.active>a {     
   background: #93c9ff;     /*背景の色を変える*/
-  border-radius: 15px;     /*角を丸くする*/
+  border-radius: 30px;     /*角を丸くする*/
+}
+
+.page-item .page-link {
+  border: none;
+}
+
+.page-item.active span.page-link {
+  z-index: 3;
+  color: #fff;
+  background: #17a2b8; 
+  border-color: #17a2b8;
+  border-radius: 30px; 
 }
 
 /*ホバー時のデザイン*/
 .pagination>li>a:hover {        
-  border-radius: 15px;    /*角を丸くする*/
+  border-radius: 30px;    /*角を丸くする*/
 }
 
 
