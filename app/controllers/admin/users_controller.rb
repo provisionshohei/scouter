@@ -3,7 +3,7 @@ module Admin
     before_action :require_admin
 
     def index
-      @users = User.paginate(page: params[:page], per_page: 12)
+      @users = User.paginate(page: params[:page], per_page: 6)
     end
 
     def new

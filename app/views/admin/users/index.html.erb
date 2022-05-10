@@ -1,16 +1,16 @@
-<h1>ユーザー管理</h1>
+<h1 class="text-muted mt-3">スカウター管理</h1>
 
 <div class="text-center">
-    <%= link_to '新しくユーザー作成', new_admin_user_path, class: 'btn btn-warning font-weight-bold my-3 btn-lg shadow' %>
+    <%= link_to '新スカウター作成', new_admin_user_path, class: 'btn btn-warning font-weight-bold my-3 btn-lg text-white' %>
 </div>
 
-<%= render "shared/paginate" %>
-
-<table class="table table-striped table-hover table-bordered shadow-sm my-3">
+<table class="table table-hover shadow-sm my-3">
     <thead class="thead-default">
-        <tr class="table-danger text-center">
+        <tr class="text-center">
             <th><%= User.human_attribute_name(:name) %></th>
-            <th><%= User.human_attribute_name(:email) %></th>
+            <th><%= User.human_attribute_name(:sex) %></th>
+            <th><%= User.human_attribute_name(:generation) %></th>
+            <th><%= User.human_attribute_name(:point) %></th>
             <th><%= User.human_attribute_name(:admin) %></th>
             <th>操作</th>
         </tr>
@@ -19,12 +19,31 @@
     <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user.email %></td>
+          <td>
+            <%= user.sex == 0 ? "女性" : "男性" %></td>
+          <td>
+            <%=  
+                if user.generation == 0
+                "10代"
+                elsif user.generation == 1
+                "20代"
+                elsif user.generation == 2
+                "30代"
+                elsif user.generation == 3
+                "40代"
+                elsif user.generation == 4
+                "50代"
+                else
+                "60代以上"
+                end
+            %>
+          </td>
+          <td><%= user.point %></td>
           <td class="text-center font-weight-bold"><%= user.admin? ? '有' : '無' %></td>
-          <td class="d-fl">
-              <%= link_to "詳細", user_path(user), class: "btn btn-primary" %>
-              <%= link_to "編集", edit_user_path(user), class: "btn btn-secondary" %>
-              <%= link_to "削除", user, method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger" %>
+          <td>
+              <%= link_to "詳細", user_path(user), class: "btn btn-info text-white" %>
+              <%= link_to "編集", edit_user_path(user), class: "btn btn-secondary text-white" %>
+              <%= link_to "削除", user, method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger text-white" %>
           </td>
         </tr>
     <% end %>    
