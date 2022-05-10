@@ -1,21 +1,25 @@
 <% if !current_user %>
-  <p class="big">テスト</p>
-  <h1 class="display-1 my-5">第一印象は異性への<br />「戦闘力」だ！！！</h1>
+  <div>
+    <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block text-white' %>
+    <%= link_to '新規「スカウター」登録', new_user_path, class: 'btn btn-info btn-lg btn-block text-white' %>
+  </div>
+  <h1 class="display-3 my-5">第一印象は<br />「戦闘力」だ！！！</h1>
   <h2>キミの「戦闘力」は果たして！？</h2>
   <div>
     <%=image_tag "scouter_top.jpg", class: 'img-fluid rounded img-thumbnail' %>
   </div>
-  <h3 class="mt-4">君の写真で戦闘力が評価される！</h3>
-  <h3 class="mt-4">年代別のが評価もわかるぞ！</h3>
-  <h3 class="mt-4">評価をすればポイントがたまる（一人評価→１ポイント）。</h3>
-  <h4 class="my-4">5ポイントをためると気になる人の評価をチェックすることができる！</h4>
+  <h3 class="mt-4">登録スカウターたちが写真でキミの戦闘力を計測！</h3>
+  <h3 class="mt-4">年代別のキミの評価もわかるぞ！</h3>
+  <p class="mt-4">自分がスカウターとなってだれかを評価をすればポイントがたまるぞ（1人評価につき１ポイント）</p>
+  <p class="my-4">5ポイントをためると「気になる人」の評価をチェックできる！</p>
   <div>
-    <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block' %>
-    <%= link_to '新規登録', new_user_path, class: 'btn btn-info btn-lg btn-block' %>
+    <%= link_to 'ログイン', login_path, class: 'btn btn-success btn-lg btn-block text-white' %>
+    <%= link_to '新規「スカウター」登録', new_user_path, class: 'btn btn-info btn-lg btn-block text-white' %>
   </div>
 <% else %>
 
-  <h1>ユーザー一覧</h1>
+  <P class="large">- スカウターを発動中 -</P>
+  <p><%= @users.count %> 人</p>
 
   <%= render "shared/paginate" %>
 
@@ -24,10 +28,10 @@
     <% @users.each do |user| %>
     <div class="col-sm-3">
       <div class="card mb-3">
-        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <%= image_tag user_demo_image, class: 'card-img-top', alt: 'Card image cap' %>
         <div class="card-body">
-          <h5 class="card-title"><%= User.human_attribute_name(:name) %>：<%= user.name %></h5>
-          <%= link_to "プロフィール", user_path(user), class: "btn btn-primary" %>
+          <h5 class="card-title"><%= user.name %></h5>
+          <%= link_to "計測する！", user_path(user), class: "btn btn-border" %>
         </div>
       </div>
     </div>  
