@@ -4,6 +4,8 @@ module Admin
 
     def index
       @users = User.paginate(page: params[:page], per_page: 6)
+      @male = User.where(sex: 1)
+      @female = User.where(sex: 0)
     end
 
     def new

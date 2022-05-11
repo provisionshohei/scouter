@@ -166,3 +166,26 @@ end
   )
 end
 
+User.create!(
+  name: "しょう",
+  email: "sho@email.com",
+  password_digest: "password",
+  admin: true,
+  sex: 1,
+  hobby: "料理",
+  character: "受け身",
+  generation: 5,
+  point: 100,
+)
+
+User.create!(
+  name: "なつみ",
+  email: "natsumi@email.com",
+  password_digest: "password",
+  admin: false,
+  sex: 1,
+  hobby: "料理",
+  character: "受け身",
+  generation: 0,
+  point: 100,
+)
