@@ -1,4 +1,4 @@
-<h1 class="text-muted mt-3">スカウター管理</h1>
+<p class="mt-3">スカウター<span class="small">（男性人 <%= @male.count %> / 女性<%= @female.count %>人）</span>管理</p>
 
 <div class="text-center">
     <%= link_to '新スカウター作成', new_admin_user_path, class: 'btn btn-warning font-weight-bold my-3 btn-lg text-white' %>
@@ -19,25 +19,8 @@
     <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td>
-            <%= user.sex == 0 ? "女性" : "男性" %></td>
-          <td>
-            <%=  
-                if user.generation == 0
-                "10代"
-                elsif user.generation == 1
-                "20代"
-                elsif user.generation == 2
-                "30代"
-                elsif user.generation == 3
-                "40代"
-                elsif user.generation == 4
-                "50代"
-                else
-                "60代以上"
-                end
-            %>
-          </td>
+          <td><%= set_sex(user) %></td>
+          <td><%=  set_generation(user) %></td>
           <td><%= user.point %></td>
           <td class="text-center font-weight-bold"><%= user.admin? ? '有' : '無' %></td>
           <td>

@@ -13,10 +13,10 @@
       <div class="card-body">
         <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
         <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
-        <% if current_user.id == @user.id %>
+        <% if current_user.id == @user.id || current_user.admin? %>
           <p class="card-text"><%= User.human_attribute_name(:email) %>：<%= @user.email %></p>
-          <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex %></p>
-          <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation %></p>
+          <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex(@user) %></p>
+          <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation(@user) %></p>
           <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
       </tr>
         <% end %>
@@ -24,10 +24,14 @@
     </div>
   </div>
 </div>
-
+<% if current_user.point >= 5 %>
+  <div>
+    <%= link_to 'プロフチェック！', users_path, class: "btn btn-warning btn-lg text-white mb-4" %>
+  </div>
+<% end %>
 <% if current_user.id == @user.id || current_user.admin? %>
   <div class="text-center">
-    <%= link_to '編集する', edit_user_path, class: "btn btn-info text-white" %>
+    <%= link_to '編集する', edit_user_path, class: "btn btn-info text-white mr-3" %>
     <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger text-white" %>
   </div>
 <% else %>
@@ -95,9 +99,12 @@
           <%= render "bullet" %>
         </li>
       </ul>
-      <div class="text-center">
-        <%= f.submit 'レベルを計測！', class: "btn btn-info btn-lg btn-block" %>
+      <div>
+        <%= f.submit 'レベルを計測！', class: "btn btn-info btn-lg" %>
       </div>
     <% end %>
   </div>
+<% end %>
+<% if current_user.point >= 5 %>
+  <%= render "impression" %>
 <% end %>
