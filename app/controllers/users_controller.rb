@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  helper_method :set_sex, :set_generation, :user_demo_image, :mypage_demo_image
+  helper_method :user_demo_image, :mypage_demo_image
   skip_before_action :login_required, only: [:index, :new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :correct_user]
   before_action :correct_user, only: [:create, :edit, :destroy]
@@ -8,9 +8,9 @@ class UsersController < ApplicationController
     if current_user
       @users = if current_user.sex == 0
         User.where(sex: 1).order("RAND()").paginate(page: params[:page], per_page: 8)
-              else
+               else
         User.where(sex: 0).order("RAND()").paginate(page: params[:page], per_page: 8)
-              end
+               end
     end
   end
 
@@ -35,7 +35,6 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      get_point
       redirect_to users_url, notice: "ユーザー「#{@user.name}」を更新しました。"
     else
       render :edit
@@ -58,30 +57,6 @@ class UsersController < ApplicationController
 
     def correct_user
       redirect_to(root_url) unless @user == current_user || current_user.admin?
-    end
-
-    def set_sex
-      if @user.sex == 0
-        "女性"
-      else
-        "男性"
-      end
-    end
-
-    def set_generation
-      if @user.generation == 0
-        "10代"
-      elsif @user.generation == 1
-        "20代"
-      elsif @user.generation == 2
-        "30代"
-      elsif @user.generation == 3
-        "40代"
-      elsif @user.generation == 4
-        "50代"
-      else
-        "60代以上"
-      end
     end
 
     def point_param
