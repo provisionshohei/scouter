@@ -1,7 +1,4 @@
-<% if current_user == @user %>
-  <h1 class="text-muted my-3">マイページ</h1>
-<% end %>
-<p class="lead"><%= @user.name %><small>さん</small></p>
+<p class="lead"><%= @user.name %><small>さんのページ</small></p>
 <div class="d-flex justify-content-center">
   <div class="col-sm-5">
     <div class="card mb-3">
@@ -13,98 +10,36 @@
       <div class="card-body">
         <p class="card-text"><%= User.human_attribute_name(:hobby) %>：<%= @user.hobby %></p>
         <p class="card-text"><%= User.human_attribute_name(:character) %>：<%= @user.character %></p>
+        <%# 5ポイントブロック %>
         <% if current_user.id == @user.id || current_user.admin? %>
           <p class="card-text"><%= User.human_attribute_name(:email) %>：<%= @user.email %></p>
           <p class="card-text"><%= User.human_attribute_name(:sex) %>：<%= set_sex(@user) %></p>
           <p class="card-text"><%= User.human_attribute_name(:generation) %>：<%= set_generation(@user) %></p>
-          <p class="card-text"><%= User.human_attribute_name(:point) %>：<%= @user.point %> pts</p>
-      </tr>
+          <p class="card-text text-info font-weight-bold"><%= User.human_attribute_name(:point) %>：<span class="display-3"><%= @user.point %></span> pts</p>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-<% if current_user.point >= 5 %>
-  <div>
-    <%= link_to 'プロフチェック！', users_path, class: "btn btn-warning btn-lg text-white mb-4" %>
+<%# 測定ブロック %>
+<% if @user.id != current_user.id %>
+  <%= render "scale" %>
+<% end %>
+<%# 5ポイント以上でプロフチェック %>
+<% if current_user.point >= 5 && @user.id != current_user.id %>
+  <div class="mt-4">
+    <small class="text-danger">5ポイント消化してこの人の評価がのぞけます！</small><br />
+    <%= link_to 'いますぐチェック！', users_path, class: "btn btn-warning btn-lg text-white mb-45" %>
   </div>
 <% end %>
+<%# 印象ブロック %>
+<% if current_user.id == @user.id %>
+  <%= render "impression" %>
+<% end %>
+<%# プロフの編集・削除 %>
 <% if current_user.id == @user.id || current_user.admin? %>
   <div class="text-center">
     <%= link_to '編集する', edit_user_path, class: "btn btn-info text-white mr-3" %>
     <%= link_to "削除", @user, method: :delete, data: { confirm: "ユーザー「#{@user.name}」を削除します。よろしいですか？"}, class: "btn btn-danger text-white" %>
   </div>
-<% else %>
-  <div class="continput">
-    <%= form_with model: @user, class: "mx-3", local: true do |f| %>
-      <ul>
-        <li>
-          <%= f.radio_button :evaluation, '1' %>
-          <%= f.label :evaluation, 
-            current_user.sex ==0?'L1：修行編エピソード１から出直してきたら？':'L1：修行編エピソード１から出直せ', value: 1 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '2' %>
-          <%= f.label :evaluation, 
-            current_user.sex ==0?'L2：まずは自分磨きを毎日ね。':'L2：まずは毎日修行。話はそれから', value: 2 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '3' %>
-          <%= f.label :evaluation, 
-            current_user.sex ==0?'L3：まだ自分が見えてないわ。':'L3：まだまだ修行が足りん', value: 3 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '4' %>
-          <%= f.label :evaluation, 
-            current_user.sex==0?'L4：わたしには少し実力不足ね。':'L4：オレのテキではない', value: 4 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '5', checked: true %>
-          <%= f.label :evaluation, 
-            current_user.sex ==0?'L5：まぁまぁじゃない。':'L5：まぁまぁだな', value: 5%>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '6' %>
-          <%= f.label :evaluation, 
-            current_user.sex==0?'L6：ちょっとはやるわね。':'L6：少しはやるな', value: 6 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '7' %>
-          <%= f.label :evaluation, 
-            current_user.sex ==0?'L7：え？いいじゃん！':'L7：ほうまだこんなヤツがいたとは', value: 7 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '8' %>
-          <%= f.label :evaluation, 
-            current_user.sex==0?'L8：マジでイケてるよ！':'L8：むむっ、強敵だな', value: 8 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '9' %>
-          <%= f.label :evaluation, 
-            current_user.sex==0?'L9：ヤバすぎ！秒で落とされそう。。':'L9：まさかこのオレ様が震えているだと。。。？！', value: 9 %>
-          <%= render "bullet" %>
-        </li>
-        <li>
-          <%= f.radio_button :evaluation, '10' %>
-          <%= f.label :evaluation, 
-            current_user.sex==0?'L10：カッコいいが渋滞してる！！！':'L10：バカな、スカウターで測定不能できん！', value: 10 %>
-          <%= render "bullet" %>
-        </li>
-      </ul>
-      <div>
-        <%= f.submit 'レベルを計測！', class: "btn btn-info btn-lg" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-<% if current_user.point >= 5 %>
-  <%= render "impression" %>
 <% end %>
