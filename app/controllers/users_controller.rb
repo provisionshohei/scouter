@@ -46,9 +46,20 @@ class UsersController < ApplicationController
     redirect_to users_url, notice: "ユーザー「#{@user.name}」を削除しました。"
   end
 
+  def details 
+    @user = User.find(params[:user_id])
+    @point = current_user.point
+    lose_point
+    flash[:notice] = "5ポイント消化。(所持ポイント#{current_user.point})"
+  end
+
   private
     def user_params
       params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :sex, :character, :hobby, :generation, :point)
+    end
+
+    def point_param
+      params.require(:user).permit(:point)
     end
 
     def set_user
@@ -59,24 +70,20 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless @user == current_user || current_user.admin?
     end
 
-    def point_param
-      params.require(:user).permit(:point)
-    end
-
     def gain_point
-      @user.point += 1
-      @user.update(point_param)
-      flash[:notice] = "1ポイント獲得。(所持ポイント#{@user.point})"
+      current_user.point += 1
+      current_user.update(point_param)
+      flash[:notice] = "1ポイント獲得。(所持ポイント#{current_user.point})"
     end
   
     def lose_point
-      if @user.point > 5
-        @user.point -= 5
+      if @point > 5
+        @point -= 5
+        current_user.update(point: @point)
       else
-        @user.point = 0
+        @point = 0
+        current_user.update(point: @point)
       end
-      @user.update(point_param)
-      flash[:alert] = "5ポイント消化。(所持ポイント#{@user.point})"
     end
 
     def user_demo_image
